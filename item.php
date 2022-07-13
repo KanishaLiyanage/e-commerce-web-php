@@ -8,6 +8,11 @@ if (!isset($_SESSION['cus_id'])) {
     header('Location: landing_page.php');
 }
 
+if (!isset($_GET['item_id'])) {
+    echo "Product ID not passed!";
+    // header('Location: home.php');
+    }
+
 ?>
 
 
@@ -25,7 +30,44 @@ if (!isset($_SESSION['cus_id'])) {
 
 <body>
 
-    <h1>Item Page</h1>
+<?php
+    echo "ID passed: ".$_GET['item_id'];
+    // $id = $_GET['item_id'];
+
+    $query = "SELECT * FROM products WHERE product_id = '{$_GET['item_id']}' LIMIT 1";
+
+    $result = mysqli_query($connection, $query);
+
+        if($result){ ?>
+            <?php    while($record = mysqli_fetch_array($result)){ 
+                $_GET['p_id'] = $record['product_id'];
+                $prd_id = $record['product_id'];
+                ?>
+
+                    <p style="font-size:35px">
+                        <?php echo $record['product_brand']." ".$record['product_name'] ?>
+                        <a href="favFunction.php?item_id=<?=$_GET['p_id']?>">
+                        <i class="fa fa-heart" style="font-size:35px;color:red"> </i>
+                    </a> </p>
+                    <div class="itemImg"><img src="assets/gt500.jpg"></div>
+                    <div class="itemInfo">
+                
+                        <p>Brand: <?php echo $record['product_brand'] ?></p>
+                        <p>Name: <?php echo $record['product_name'] ?></p>
+                        <p>Price: <?php echo $record['price'] ?></p>
+                        <p>Availability:<?php echo $record['qty'] ?> items available</p>
+
+                    </div>
+
+                    <div class="itemDesc">
+                        <p>Description: <?php echo $record['product_description'] ?></p>
+                    </div>
+
+            <?php   }
+                
+        }
+
+?>
 
 </body>
 

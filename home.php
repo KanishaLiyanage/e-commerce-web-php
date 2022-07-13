@@ -29,40 +29,51 @@ if (!isset($_SESSION['cus_id'])) {
 
     <?php
 
-    $query = "SELECT product_brand, product_name, price, qty, product_img FROM products";
+    $query = "SELECT* FROM products";
 
     $result = mysqli_query($connection, $query);
-    
+
     if ($result) {
         echo mysqli_num_rows($result) . " Records found!";
 
-    if (mysqli_num_rows($result) > 0) {
-        ?> <div class="gridContainer"> <?php
-        while ($record = mysqli_fetch_array($result)) {
-    ?>
-            
-            <a class="linkedPage" href="item.php">
-                <div class="itemCard">
+        if (mysqli_num_rows($result) > 0) { ?>
 
-                    <img class="itemImage" src="assets/gt500.jpg" alt="Car">
+            <div class="gridContainer">
 
-                        <p class="itemName"><?php echo $record['product_brand'] ?></p>
-                        <p class="itemBrand"><?php echo $record['product_name'] ?></p>
-                        <p class="itemPrice"><strong> $<?php echo $record['price'] ?> </strong></p>
-                        <p class="itemQty"><?php echo $record['qty'] ?> Items Available</p>
- 
-                    <button class="favBtn"> <i class="fa fa-heart" aria-hidden="true"></i> </button>
+                <?php while ($record = mysqli_fetch_array($result)) {
 
-                </div>
-            </a>
+                    $_GET['p_id'] = $record['product_id'];
 
-    <?php
-        }
-        ?></div><?php
-    }
+                ?>
+                    <div>
 
-        }else{
-            echo "DB failed!";
+                        <a class="linkedPage" href="item.php?item_id=<?= $_GET['p_id'] ?>">
+
+                            <div class="itemCard">
+
+                                <img class="itemImage" src="assets/gt500.jpg" alt="Car">
+
+                                <p class="itemName"><?php echo $record['product_brand']." ".$record['product_name'] ?></p>
+                                <p class="itemPrice"><strong> $<?php echo $record['price'] ?> </strong></p>
+                                <p class="itemQty"><?php echo $record['qty'] ?> Items Available</p>
+
+                            </div>
+
+                        </a>
+
+                        <div class="buyBtnBox"> <a class="buyBtn" href="purchase.php?item_id=<?=$_GET['p_id']?>"> Buy </a> </div>
+                        <a class="cartBtn" href="cartFunction.php?item_id=<?=$_GET['p_id']?>"> <i class="fa fa-shopping-cart" style="font-size:25px"></i> </a>
+                        <a class="favBtn" href="favFunction.php?item_id=<?=$_GET['p_id']?>"> <i class="fa fa-heart" style="font-size:25px"> </i></i> </a>
+
+                    </div>
+
+                <?php } ?>
+
+            </div>
+
+    <?php }
+    } else {
+        echo "DB failed!";
     }
 
     ?>
