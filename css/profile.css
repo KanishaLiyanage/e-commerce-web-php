@@ -1,0 +1,30 @@
+.headerBtns{
+    margin-top: 10px;
+    padding-left: 1100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartBtn{
+
+}
+
+.favBtn{
+
+}
+
+.ordersBtn{
+
+}
+
+.editBtn{
+
+}
+
+.h1{
+    margin-top: 50px;
+}
+
+.logoutBtn{
+    text-decoration: none;
+}
