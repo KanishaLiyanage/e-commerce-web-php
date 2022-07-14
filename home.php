@@ -26,6 +26,10 @@ if (!isset($_SESSION['cus_id'])) {
 <body>
     <h1>Home Page</h1>
     <p><a href="landing_page.php"> Go to Landing Page </a></p>
+    <p><a href="profile.php"> Go to Profile </a></p>
+    <p><a href="myOrders.php"> My Orders </a></p>
+    <p><a href="myCart.php"> Cart </a></p>
+    <p><a href="myFavorites.php"> Favorites </a></p>
 
     <?php
 

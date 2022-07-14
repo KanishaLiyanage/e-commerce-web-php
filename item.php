@@ -4,6 +4,9 @@
 
 <?php
 
+$pro_id = " ";
+$t_price = " ";
+
 if (!isset($_SESSION['cus_id'])) {
     header('Location: landing_page.php');
 }
@@ -41,7 +44,10 @@ if (!isset($_GET['item_id'])) {
         if($result){ ?>
             <?php    while($record = mysqli_fetch_array($result)){ 
                 $_GET['p_id'] = $record['product_id'];
+                $pro_id = $_GET['p_id'];
                 $prd_id = $record['product_id'];
+                $_GET['p_price'] = $record['price'];
+                $prc = $_GET['p_price'];
                 ?>
 
                     <p style="font-size:35px">
@@ -68,6 +74,34 @@ if (!isset($_GET['item_id'])) {
         }
 
 ?>
+
+<form action="item.php" method="POST">
+    Quantity: <input type="number" min="1" name="qty" size="2" maxlength="3" placeholder="Qty" required>
+        <input type="hidden" name="prc" value="<?php echo $prc; ?>">
+        <input type="hidden" name="pro_id" value="<?php echo $pro_id; ?>">
+        <br> <br>
+        <input type="submit" name="buy" value="Buy Now">
+        <input type="submit" name="cart" value="Add to Cart">
+    </form>
+
+    <?php
+        
+        if(isset($_POST['buy'])){
+            $c_qty = $_POST['qty'];
+            $p_price = mysqli_real_escape_string($connection, $_POST['prc']);
+            $prd_id = mysqli_real_escape_string($connection, $_POST['pro_id']);
+            $t_price = $p_price * $c_qty;
+            header("location: confirmPurchase.php?item_id={$prd_id}&total={$t_price}&qty={$c_qty}");
+        }
+
+        if(isset($_POST['cart'])){
+            $c_qty = $_POST['qty'];
+            $prd_id = mysqli_real_escape_string($connection, $_POST['pro_id']);
+            $t_price = $p_price * $c_qty;
+            header("location: confirmPurchase.php?item_id={$prd_id}&total={$t_price}&qty={$c_qty}");
+        }
+
+    ?>
 
 </body>
 
