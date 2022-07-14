@@ -13,6 +13,18 @@ if (!isset($_SESSION['cus_id'])) {
     header('Location: landing_page.php');
 }else{
 
+    $cart_query = "SELECT cart.*, products.*
+                   FROM cart
+                   INNER JOIN products ON cart.cart_id = products.product_id";
+
+    $result = mysqli_query($connection, $cart_query);
+
+    if($result){
+
+        
+
+    }
+
 }
 
 ?>
@@ -32,7 +44,9 @@ if (!isset($_SESSION['cus_id'])) {
 
 <body>
 
+    <center>
     <h1>My Cart</h1>
+    </center>
 
 </body>
 
