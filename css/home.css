@@ -115,6 +115,15 @@
     transition-duration: 0.4s;
 }
 
+.homeHeader{
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-left: 1140px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .buyBtn{
     position: relative;
     color: white;

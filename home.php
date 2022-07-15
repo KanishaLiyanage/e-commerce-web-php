@@ -10,7 +10,6 @@ if (!isset($_SESSION['cus_id'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,13 +23,16 @@ if (!isset($_SESSION['cus_id'])) {
 </head>
 
 <body>
-    <h1>Home Page</h1>
-    <p><a href="landing_page.php"> Go to Landing Page </a></p>
-    <p><a href="profile.php"> Go to Profile </a></p>
-    <p><a href="myOrders.php"> My Orders </a></p>
-    <p><a href="myCart.php"> Cart </a></p>
-    <p><a href="myFavorites.php"> Favorites </a></p>
 
+    <div class="homeHeader">
+        <p><a href="profile.php"> Go to Profile </a></p>
+        <p><a href="myOrders.php"> My Orders </a></p>
+        <p><a href="myCart.php"> Cart </a></p>
+        <p><a href="myFavorites.php"> Favorites </a></p>
+    </div>
+
+    <center> <h1>Home Page</h1> </center>
+   
     <?php
 
     $query = "SELECT* FROM products";
