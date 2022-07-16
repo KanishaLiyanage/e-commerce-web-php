@@ -21,8 +21,6 @@ if (isset($_GET['item_id'])) {
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 

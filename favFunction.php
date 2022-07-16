@@ -26,15 +26,13 @@ if (isset($_GET['item_id'])) {
         echo "<script>alert(\"Product is already exists in your favorites!\")</script>";
         echo "<script>window.location='home.php'</script>";
     } else {
-        $count_items = 1;
-        echo $count_items . " item added to favorites";
 
-        $query = "INSERT INTO favorites (customer_id, product_id, fav_count)
-              VALUES ('{$c_id}', '{$p_id}', '{$count_items}') LIMIT 1";
+        $fav_query = "INSERT INTO favorites (customer_id, product_id, fav_count)
+              VALUES ('{$c_id}', '{$p_id}', 1) LIMIT 1";
 
-        $result = mysqli_query($connection, $query);
+        $fav_result = mysqli_query($connection, $fav_query);
 
-        if ($result) {
+        if ($fav_result) {
             header("location: home.php?added_to_favorites=successful!");
         }
     }

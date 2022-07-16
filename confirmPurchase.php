@@ -8,6 +8,7 @@ $p_id = " ";
 $c_id = " ";
 $t_price = " ";
 $o_qty = " ";
+$newQty = " ";
 
 if (!isset($_SESSION['cus_id'])) {
     header('Location: landing_page.php');
@@ -42,7 +43,7 @@ if (!isset($_SESSION['cus_id'])) {
 
 <body>
 
-    <?Php
+<?Php
 
     $_GET['id'] = $_SESSION['cus_id'];
     $cus_id = $_GET['id'];
@@ -61,7 +62,7 @@ if (!isset($_SESSION['cus_id'])) {
 
             <div class="confirmCard">
                 <h2 class="h2">Confirm Purchase</h2>
-                <p class="p"><?php echo $record['product_id'] ?></p>
+                <p class="p">ID: <?php echo $record['product_id'] ?></p>
                 <p class="p1"><?php echo $record['product_brand'] ?></p>
                 <p class="p2"><?php echo $record['product_name'] ?></p>
                 <p class="p3"><?php echo "$" . $record['price'] ?></p>
@@ -84,7 +85,7 @@ if (!isset($_SESSION['cus_id'])) {
         <input type="submit" name="confirm" value="Confirm Purchase">
     </form>
 
-    <?php
+<?php
 
     if (isset($_POST['confirm'])) {
         $cid = mysqli_real_escape_string($connection, $_POST['cus_id']);
@@ -96,15 +97,34 @@ if (!isset($_SESSION['cus_id'])) {
         $insert_query = "INSERT INTO orders(customer_id, product_id, order_qty, order_price)
                         VALUES ('{$cid}', '{$pid}', '{$oqty}', '{$tp}')";
 
-        $query_checker = mysqli_query($connection, $insert_query);
+        $products_query = "SELECT qty FROM products
+                           WHERE product_id = '{$pid}' LIMIT 1";
+
+        $products = mysqli_query($connection, $products_query);
+
+        if ($products) {
+            while ($product = mysqli_fetch_array($products)) {
+            $_GET['prd_qty'] = $product['qty'];
+            $qty = $_GET['prd_qty'];
+            }
+
+        }
+        echo $qty;
+        $newQty = $qty - $oqty;
+        echo $newQty;
+
+        $update_query = "UPDATE products SET qty = '{$newQty}' WHERE product_id = '{$pid}'";
+
+        $insert_query_checker = mysqli_query($connection, $insert_query);
+        $update_query_checker = mysqli_query($connection, $update_query);
         
-        if($query_checker){
-            header("location: myOrders.php");
+        if($insert_query_checker && $update_query_checker){
+            header("location: myOrders.php?newQuantity=$newQty");
         }
 
     }
 
-    ?>
+?>
 
 
 </body>
