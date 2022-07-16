@@ -13,19 +13,42 @@ if (!isset($_SESSION['cus_id'])) {
     header('Location: landing_page.php');
 }else{
 
-    $cart_query = "SELECT cart.*, products.*
-                   FROM cart
-                   INNER JOIN products ON cart.cart_id = products.product_id";
+    $cart_query = "SELECT
+    cart.cart_id,
+    cart.customer_id,
+    cart.product_id,
+    products.product_name,
+    products.product_brand,
+    products.price
+    FROM
+    cart
+    INNER JOIN products ON cart.cart_id = products.product_id
+    WHERE
+    cart.customer_id = '{$_SESSION['cus_id']}'";
 
     $result = mysqli_query($connection, $cart_query);
 
     if($result){
 
-        
+            $cartTable = "<table border=\"1\" cellpadding=\"20\" cellspacing=\"0\">";
+            $cartTable .= "<tr>
+                            <th>Product Brand</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            </tr>";
+    
+            while ($cart = mysqli_fetch_array($result)) {
+    
+                $cartTable .= "<td>" . $cart['product_brand'] . "</td>";
+                $cartTable .= "<td>" . $cart['product_name'] . "</td>";
+                $cartTable .= "<td>" . "$".$cart['price'] . "</td>";
+                $cartTable .= "</tr>";
+            }
+    
+            $cartTable .= "</table>";
+        }
 
     }
-
-}
 
 ?>
 
@@ -46,6 +69,7 @@ if (!isset($_SESSION['cus_id'])) {
 
     <center>
     <h1>My Cart</h1>
+    <?php echo $cartTable; ?>
     </center>
 
 </body>

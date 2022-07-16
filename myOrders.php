@@ -11,17 +11,25 @@ $o_qty = " ";
 
 if (!isset($_SESSION['cus_id'])) {
     header('Location: landing_page.php');
-}else{
+} else {
 
-    $orders_query = "SELECT orders.order_id, orders.customer_id, orders.order_qty, orders.order_price, products.product_id, products.product_name, products.product_brand
-                     FROM orders
-                     INNER JOIN products
-                     on orders.order_id = products.product_id
-                     WHERE orders.customer_id = '{$_SESSION['cus_id']}'";
+    $orders_query = "SELECT
+    orders.order_id,
+    orders.customer_id,
+    orders.order_qty,
+    orders.order_price,
+    orders.created_time,
+    products.product_id,
+    products.product_name,
+    products.product_brand
+    FROM
+    orders
+    INNER JOIN products ON orders.order_id = products.product_id
+    WHERE orders.customer_id = '{$_SESSION['cus_id']}'";
 
     $check_order_query = mysqli_query($connection, $orders_query);
 
-    if($check_order_query){
+    if ($check_order_query) {
 
         $ordersTable = "<table border=\"1\" cellpadding=\"20\" cellspacing=\"0\">";
         $ordersTable .= "<tr>
@@ -32,19 +40,18 @@ if (!isset($_SESSION['cus_id'])) {
                         <th>Order Placed Date</th>
                         </tr>";
 
-            while($orders = mysqli_fetch_array($check_order_query)){
+        while ($orders = mysqli_fetch_array($check_order_query)) {
 
-                $ordersTable .= "<td>" . $orders['order_qty'] . "</td>";
-                $ordersTable .= "<td>" . $orders['order_price'] . "</td>";
-                $ordersTable .= "<td>" . $orders['created_time'] . "</td>";
-                $ordersTable .= "</tr>";
-        
-                }
+            $ordersTable .= "<td>" . $orders['product_brand'] . "</td>";
+            $ordersTable .= "<td>" . $orders['product_name'] . "</td>";
+            $ordersTable .= "<td>" . $orders['order_qty'] . "</td>";
+            $ordersTable .= "<td>" . $orders['order_price'] . "</td>";
+            $ordersTable .= "<td>" . $orders['created_time'] . "</td>";
+            $ordersTable .= "</tr>";
+        }
 
         $ordersTable .= "</table>";
-
     }
-
 }
 
 ?>
