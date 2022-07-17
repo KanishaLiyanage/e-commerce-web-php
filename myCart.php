@@ -118,7 +118,8 @@ if (!isset($_SESSION['cus_id'])) {
                         </a>
                         
                         <div class="buyBtnBox"> <a class="buyBtn" href="purchase.php?item_id=<?=$_GET['p_id']?>"> Buy </a> </div>
-                        <a class="favBtn" href="favFunction.php?item_id=<?=$_GET['p_id']?>"> <i class="fa fa-heart" style="font-size:25px"> </i></i> </a>
+                        <a class="cartFavBtn" href="favFunction.php?item_id=<?=$_GET['p_id']?>"> <i class="fa fa-heart" style="font-size:25px"> </i> </a>
+                        <a class="cartRemoveBtn" href="removeCart.php?item_id=<?=$_GET['p_id']?>"> <i class="fa fa-trash-o" style="font-size:25px"></i> </a>
 
                     </div>
 
