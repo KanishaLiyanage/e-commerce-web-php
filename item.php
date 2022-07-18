@@ -55,12 +55,12 @@ if (!isset($_GET['item_id'])) {
                         <a href="favFunction.php?item_id=<?=$_GET['p_id']?>">
                         <i class="fa fa-heart" style="font-size:35px;color:red"> </i>
                     </a> </p>
-                    <div class="itemImg"><img src="assets/gt500.jpg"></div>
+                    <img class="itemImage" src="../e-commerce-web-admin-portal/assets/uploads/<?php echo $record['product_img'];?>" alt="<?php echo $record['product_name'];?>" >
                     <div class="itemInfo">
                 
                         <p>Brand: <?php echo $record['product_brand'] ?></p>
                         <p>Name: <?php echo $record['product_name'] ?></p>
-                        <p>Price: <?php echo $record['price'] ?></p>
+                        <p>Price: $<?php echo $record['price'] ?></p>
                         <p>Availability:<?php echo $record['qty'] ?> items available</p>
 
                     </div>

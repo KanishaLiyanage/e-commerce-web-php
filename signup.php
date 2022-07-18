@@ -3,35 +3,69 @@
 
 <?php
 
-    if(isset($_POST['signup'])){
+    if(isset($_POST['signup']) && isset($_FILES['image'])){
 
-        $uname = mysqli_real_escape_string($connection, $_POST['username']);
-        $umail = mysqli_real_escape_string($connection, $_POST['email']);
-        $upw = mysqli_real_escape_string($connection, $_POST['pw']);
-        $uno = mysqli_real_escape_string($connection, $_POST['number']);
-        $uadr = mysqli_real_escape_string($connection, $_POST['address']);
-        $upost = mysqli_real_escape_string($connection,$_POST['postalcode'] );
-        $ucity = mysqli_real_escape_string($connection, $_POST['city']);
-        $uprov = mysqli_real_escape_string($connection, $_POST['province']);
-        $ucountry = mysqli_real_escape_string($connection, $_POST['country']);
-        $uimg = mysqli_real_escape_string($connection, $_POST['image']);
+        $image_name = $_FILES['image']['name'];
+        $image_size = $_FILES['image']['size'];
+        $tmp_name = $_FILES['image']['tmp_name'];
+        $errors = $_FILES['image']['error'];
 
-        //$encrypted_password = sha1($upw);
+        if($errors === 0){
 
-        $query = "INSERT INTO customers(username, email, password, mobile_number, address, postal_code, city, province, country, image)
-        VALUES ('{$uname}','{$umail}','{$upw}','{$uno}','{$uadr}','{$upost}','{$ucity}','{$uprov}','{$ucountry}','{$uimg}')";
+            if($image_size > 12500000){
+    
+                echo "File is too large!";
+    
+            }else{
 
-        $result = mysqli_query($connection, $query);
+                $img_extension = pathinfo($image_name, PATHINFO_EXTENSION);
+                $img_ex_lc = strtolower($img_extension);
 
-        if($result){
-            $customer = mysqli_fetch_assoc($result);
-            $_SESSION['cus_id'] = $customer['customer_id'];
-            $_SESSION['cus_username'] = $customer['username'];
-            header("Location: home.php");
+                $allowed_extensions = array("jpg", "jpeg");
+
+                if(in_array($img_ex_lc, $allowed_extensions)){
+
+                    $new_img_name = uniqid("CUSTOMER_IMG-", true) . "." . $img_ex_lc;
+                    $img_upload_path = 'assets/uploads/' . $new_img_name;
+
+                    move_uploaded_file($tmp_name, $img_upload_path);
+
+                    $uname = mysqli_real_escape_string($connection, $_POST['username']);
+                    $umail = mysqli_real_escape_string($connection, $_POST['email']);
+                    $upw = mysqli_real_escape_string($connection, $_POST['pw']);
+                    $uno = mysqli_real_escape_string($connection, $_POST['number']);
+                    $uadr = mysqli_real_escape_string($connection, $_POST['address']);
+                    $upost = mysqli_real_escape_string($connection,$_POST['postalcode'] );
+                    $ucity = mysqli_real_escape_string($connection, $_POST['city']);
+                    $uprov = mysqli_real_escape_string($connection, $_POST['province']);
+                    $ucountry = mysqli_real_escape_string($connection, $_POST['country']);
+            
+                    //$encrypted_password = sha1($upw);
+            
+                    $query = "INSERT INTO customers(username, email, password, mobile_number, address, postal_code, city, province, country, image)
+                    VALUES ('{$uname}','{$umail}','{$upw}','{$uno}','{$uadr}','{$upost}','{$ucity}','{$uprov}','{$ucountry}','{$new_img_name}')";
+            
+                    $result = mysqli_query($connection, $query);
+            
+                    if($result){
+                        $customer = mysqli_fetch_assoc($result);
+                        $_SESSION['cus_id'] = $customer['customer_id'];
+                        $_SESSION['cus_username'] = $customer['username'];
+                        header("Location: home.php");
+                    }
+
+                }else{
+                    echo "File extension can not be allowed! Please upload jpg files only.";
+                }
+
+            }
+        
         }else{
-
+            echo "Error in Image file!";
         }
 
+    }else{
+        echo "There is an error in your inputs!";
     }
 
 ?>
@@ -49,7 +83,7 @@
 <body>
     <h1>Sign Up Page</h1>
 
-    <form action="signup.php" method="POST">
+    <form action="signup.php" method="POST" enctype="multipart/form-data">
 
         User Name: <input type="text" name="username" required>
         <br>
@@ -57,19 +91,19 @@
         <br>
         Password: <input type="password" name="pw" required>
         <br>
-        Mobile Number: <input type="text" name="number">
+        Mobile Number: <input type="text" name="number" required>
         <br>
-        Residence Address: <input type="text" name="address">
+        Residence Address: <input type="text" name="address" required>
         <br>
-        Postal Code: <input type="text" name="postalcode">
+        Postal Code: <input type="text" name="postalcode" required>
         <br>
-        City: <input type="text" name="city">
+        City: <input type="text" name="city" required>
         <br>
-        Province: <input type="text" name="province">
+        Province: <input type="text" name="province" required>
         <br>
-        Country: <input type="text" name="country">
+        Country: <input type="text" name="country" required>
         <br>
-        Upload your Image (only jpg accepted): <input type="file" name="image">
+        Upload your Image (only jpg accepted): <input type="file" name="image" required>
         <br>
         <input type="submit" name="signup" value="Sign Up and Continue">
 

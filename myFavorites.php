@@ -36,7 +36,7 @@ if (!isset($_SESSION['cus_id'])) {
     <?php
 
         $fav_query = "SELECT
-        favorites.fav_id,
+        favorites.favorite_id,
         favorites.customer_id,
         favorites.product_id,
         products.product_name,
@@ -45,7 +45,7 @@ if (!isset($_SESSION['cus_id'])) {
         products.price
         FROM
         favorites
-        INNER JOIN products ON favorites.fav_id = products.product_id
+        INNER JOIN products ON favorites.favorite_id = products.product_id
         WHERE
         favorites.customer_id = '{$_SESSION['cus_id']}'";
 

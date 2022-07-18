@@ -27,7 +27,7 @@ if (isset($_GET['item_id'])) {
         echo "<script>window.location='home.php'</script>";
     } else {
 
-        $fav_query = "INSERT INTO favorites (customer_id, product_id, fav_count)
+        $fav_query = "INSERT INTO favorites (customer_id, product_id, favorites_count)
               VALUES ('{$c_id}', '{$p_id}', 1) LIMIT 1";
 
         $fav_result = mysqli_query($connection, $fav_query);

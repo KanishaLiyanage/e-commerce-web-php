@@ -57,8 +57,8 @@ if (!isset($_SESSION['cus_id'])) {
                         <a class="linkedPage" href="item.php?item_id=<?= $_GET['p_id'] ?>">
 
                             <div class="itemCard">
-
-                                <img class="itemImage" src="assets/gt500.jpg" alt="Car">
+                            
+                                <img class="itemImage" src="../e-commerce-web-admin-portal/assets/uploads/<?php echo $record['product_img'];?>" alt="<?php echo $record['product_name'];?>" >
 
                                 <p class="itemName"><?php echo $record['product_brand']." ".$record['product_name'] ?></p>
                                 <p class="itemPrice"><strong> $<?php echo $record['price'] ?> </strong></p>
@@ -90,3 +90,5 @@ if (!isset($_SESSION['cus_id'])) {
 </html>
 
 <?php mysqli_close($connection); ?>
+
+<!-- <img src="../e-commerce-web-admin-portal/assets/uploads/<?=$record['product_img']?>"> -->
