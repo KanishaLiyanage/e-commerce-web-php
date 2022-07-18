@@ -48,7 +48,7 @@ if (!isset($_SESSION['cus_id'])) {
 
                 <div class="profileCard">
 
-                    <p>Image: </p>
+                    <img class="uImg" src="../e-commerce-website/assets/uploads/profile_pics/<?php echo $record['image'];?>" alt="<?php echo $record['image'];?>">
                     <p>ID: <?php echo $record['customer_id']; ?> </p>
                     <p>User Name: <?php echo $record['username']; ?> </p>
                     <p>Email: <?php echo $record['email']; ?> </p>

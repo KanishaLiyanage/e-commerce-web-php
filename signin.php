@@ -10,7 +10,7 @@ if (isset($_POST['login'])) {
     //$hashed_pw = sha1($password);
 
     $query = "SELECT * FROM customers
-              WHERE email = '{$email}' AND password = '{$password}'
+              WHERE email = '{$email}' AND password = '{$password}' AND is_deleted = 0
               LIMIT 1";
 
     $result = mysqli_query($connection, $query);

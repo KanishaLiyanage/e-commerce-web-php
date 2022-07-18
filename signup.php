@@ -26,7 +26,7 @@
                 if(in_array($img_ex_lc, $allowed_extensions)){
 
                     $new_img_name = uniqid("CUSTOMER_IMG-", true) . "." . $img_ex_lc;
-                    $img_upload_path = 'assets/uploads/' . $new_img_name;
+                    $img_upload_path = 'assets/uploads/profile_pics' . $new_img_name;
 
                     move_uploaded_file($tmp_name, $img_upload_path);
 

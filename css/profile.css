@@ -1,3 +1,10 @@
+.uImg{
+    width: 200px;
+    height: 200px;
+    display: block;
+    object-fit: contain;
+}
+
 .headerBtns{
     margin-top: 10px;
     padding-left: 1100px;

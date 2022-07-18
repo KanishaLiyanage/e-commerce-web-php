@@ -7,6 +7,6 @@ if (isset($_COOKIE[session_name()])) {
 }
 
 session_destroy();
-header('Location: /landing_page.php?logout=yes');
+header('Location: ../landing_page.php?logout=yes');
 
 ?>
