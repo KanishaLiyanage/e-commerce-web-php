@@ -90,5 +90,3 @@ if (!isset($_SESSION['cus_id'])) {
 </html>
 
 <?php mysqli_close($connection); ?>
-
-<!-- <img src="../e-commerce-web-admin-portal/assets/uploads/<?=$record['product_img']?>"> -->

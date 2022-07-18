@@ -16,8 +16,8 @@
     height: 280px;
     background-color: rgb(221, 233, 255);
     border-radius: 25px;
+    cursor: pointer;
     transition-duration: 0.4s;
-
 }
 
 .itemCard:hover{
